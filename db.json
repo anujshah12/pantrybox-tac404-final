@@ -1,0 +1,415 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Nicholas Chong",
+      "email": "nick@example.com"
+    },
+    {
+      "id": "2",
+      "name": "Jamie Lee",
+      "email": "jamie@example.com"
+    }
+  ],
+  "pantryItems": [
+    {
+      "id": "1",
+      "userId": 1,
+      "name": "Flour",
+      "quantity": "2 cups",
+      "category": "Baking",
+      "inStock": true
+    },
+    {
+      "id": "2",
+      "userId": 1,
+      "name": "Egg",
+      "quantity": "6",
+      "category": "Dairy",
+      "inStock": true
+    },
+    {
+      "id": "3",
+      "userId": 1,
+      "name": "Milk",
+      "quantity": "1 cup",
+      "category": "Dairy",
+      "inStock": false
+    },
+    {
+      "id": "4",
+      "userId": 1,
+      "name": "Butter",
+      "quantity": "4 tbsp",
+      "category": "Dairy",
+      "inStock": false
+    },
+    {
+      "id": "5",
+      "userId": 1,
+      "name": "Garlic",
+      "quantity": "3 cloves",
+      "category": "Produce",
+      "inStock": true
+    },
+    {
+      "id": "6",
+      "userId": 2,
+      "name": "Rice",
+      "quantity": "3 cups",
+      "category": "Grains",
+      "inStock": true
+    },
+    {
+      "id": "7",
+      "userId": 2,
+      "name": "Chicken Breast",
+      "quantity": "2",
+      "category": "Protein",
+      "inStock": true
+    },
+    {
+      "id": "8",
+      "userId": 2,
+      "name": "Soy Sauce",
+      "quantity": "2 tbsp",
+      "category": "Condiments",
+      "inStock": true
+    }
+  ],
+  "ingredients": [
+    {
+      "id": "1",
+      "name": "Flour",
+      "unit": "cup"
+    },
+    {
+      "id": "2",
+      "name": "Egg",
+      "unit": "count"
+    },
+    {
+      "id": "3",
+      "name": "Milk",
+      "unit": "cup"
+    },
+    {
+      "id": "4",
+      "name": "Butter",
+      "unit": "tbsp"
+    },
+    {
+      "id": "5",
+      "name": "Garlic",
+      "unit": "clove"
+    },
+    {
+      "id": "6",
+      "name": "Spaghetti",
+      "unit": "g"
+    },
+    {
+      "id": "7",
+      "name": "Olive Oil",
+      "unit": "tbsp"
+    },
+    {
+      "id": "8",
+      "name": "Tomato",
+      "unit": "count"
+    },
+    {
+      "id": "9",
+      "name": "Basil",
+      "unit": "tbsp"
+    },
+    {
+      "id": "10",
+      "name": "Chicken Breast",
+      "unit": "count"
+    },
+    {
+      "id": "11",
+      "name": "Rice",
+      "unit": "cup"
+    },
+    {
+      "id": "12",
+      "name": "Soy Sauce",
+      "unit": "tbsp"
+    },
+    {
+      "id": "13",
+      "name": "Onion",
+      "unit": "count"
+    },
+    {
+      "id": "14",
+      "name": "Salt",
+      "unit": "tsp"
+    },
+    {
+      "id": "15",
+      "name": "Black Pepper",
+      "unit": "tsp"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "101",
+      "title": "Simple Pancakes",
+      "authorUserId": 1,
+      "steps": "Whisk dry and wet separately. Combine. Cook on medium heat. Flip once bubbles form.",
+      "servings": 2,
+      "diet": "vegetarian",
+      "cuisine": "American",
+      "isPublic": true,
+      "createdAt": "2025-10-01T12:00:00Z",
+      "tags": [
+        "breakfast",
+        "quick"
+      ]
+    },
+    {
+      "id": "102",
+      "title": "Garlic Butter Pasta",
+      "authorUserId": 1,
+      "steps": "Boil pasta. Sauté garlic in butter and olive oil. Toss with pasta. Season and serve.",
+      "servings": 2,
+      "diet": "vegetarian",
+      "cuisine": "Italian",
+      "isPublic": true,
+      "createdAt": "2025-10-02T15:30:00Z",
+      "tags": [
+        "weeknight",
+        "pantry"
+      ]
+    },
+    {
+      "id": "103",
+      "title": "Tomato Basil Soup",
+      "authorUserId": 2,
+      "steps": "Sauté onion and garlic. Add tomatoes and simmer. Blend smooth. Stir in basil.",
+      "servings": 4,
+      "diet": "vegan",
+      "cuisine": "Italian",
+      "isPublic": true,
+      "createdAt": "2025-10-03T18:00:00Z",
+      "tags": [
+        "soup",
+        "comfort"
+      ]
+    },
+    {
+      "id": "104",
+      "title": "Chicken Fried Rice",
+      "authorUserId": 2,
+      "steps": "Cook diced chicken. Add onion and garlic. Stir fry rice and soy sauce. Season and serve.",
+      "servings": 3,
+      "diet": "omnivore",
+      "cuisine": "Asian",
+      "isPublic": true,
+      "createdAt": "2025-10-04T20:10:00Z",
+      "tags": [
+        "one pan",
+        "leftovers"
+      ]
+    }
+  ],
+  "recipeIngredients": [
+    {
+      "id": "9001",
+      "recipeId": 101,
+      "ingredientId": 1,
+      "amount": 1.5,
+      "unit": "cup"
+    },
+    {
+      "id": "9002",
+      "recipeId": 101,
+      "ingredientId": 2,
+      "amount": 2,
+      "unit": "count"
+    },
+    {
+      "id": "9003",
+      "recipeId": 101,
+      "ingredientId": 3,
+      "amount": 1,
+      "unit": "cup"
+    },
+    {
+      "id": "9010",
+      "recipeId": 102,
+      "ingredientId": 6,
+      "amount": 200,
+      "unit": "g"
+    },
+    {
+      "id": "9011",
+      "recipeId": 102,
+      "ingredientId": 5,
+      "amount": 3,
+      "unit": "clove"
+    },
+    {
+      "id": "9012",
+      "recipeId": 102,
+      "ingredientId": 4,
+      "amount": 3,
+      "unit": "tbsp"
+    },
+    {
+      "id": "9013",
+      "recipeId": 102,
+      "ingredientId": 7,
+      "amount": 1,
+      "unit": "tbsp"
+    },
+    {
+      "id": "9014",
+      "recipeId": 102,
+      "ingredientId": 14,
+      "amount": 0.5,
+      "unit": "tsp"
+    },
+    {
+      "id": "9015",
+      "recipeId": 102,
+      "ingredientId": 15,
+      "amount": 0.25,
+      "unit": "tsp"
+    },
+    {
+      "id": "9020",
+      "recipeId": 103,
+      "ingredientId": 13,
+      "amount": 1,
+      "unit": "count"
+    },
+    {
+      "id": "9021",
+      "recipeId": 103,
+      "ingredientId": 5,
+      "amount": 2,
+      "unit": "clove"
+    },
+    {
+      "id": "9022",
+      "recipeId": 103,
+      "ingredientId": 8,
+      "amount": 5,
+      "unit": "count"
+    },
+    {
+      "id": "9023",
+      "recipeId": 103,
+      "ingredientId": 9,
+      "amount": 2,
+      "unit": "tbsp"
+    },
+    {
+      "id": "9024",
+      "recipeId": 103,
+      "ingredientId": 14,
+      "amount": 0.5,
+      "unit": "tsp"
+    },
+    {
+      "id": "9025",
+      "recipeId": 103,
+      "ingredientId": 15,
+      "amount": 0.25,
+      "unit": "tsp"
+    },
+    {
+      "id": "9030",
+      "recipeId": 104,
+      "ingredientId": 10,
+      "amount": 1,
+      "unit": "count"
+    },
+    {
+      "id": "9031",
+      "recipeId": 104,
+      "ingredientId": 13,
+      "amount": 1,
+      "unit": "count"
+    },
+    {
+      "id": "9032",
+      "recipeId": 104,
+      "ingredientId": 5,
+      "amount": 2,
+      "unit": "clove"
+    },
+    {
+      "id": "9033",
+      "recipeId": 104,
+      "ingredientId": 11,
+      "amount": 3,
+      "unit": "cup"
+    },
+    {
+      "id": "9034",
+      "recipeId": 104,
+      "ingredientId": 12,
+      "amount": 2,
+      "unit": "tbsp"
+    }
+  ],
+  "favorites": [
+    {
+      "id": "5001",
+      "userId": 1,
+      "recipeId": 102,
+      "bookmarkedAt": "2025-10-05T09:30:00Z"
+    },
+    {
+      "id": "5002",
+      "userId": 1,
+      "recipeId": 101,
+      "bookmarkedAt": "2025-10-06T14:10:00Z"
+    },
+    {
+      "id": "5003",
+      "userId": 2,
+      "recipeId": 104,
+      "bookmarkedAt": "2025-10-06T16:45:00Z"
+    }
+  ],
+  "comments": [
+    {
+      "id": "7001",
+      "recipeId": 102,
+      "userId": 1,
+      "name": "Nicholas Chong",
+      "body": "So simple and tasty",
+      "createdAt": "2025-10-06T18:45:00Z"
+    },
+    {
+      "id": "7002",
+      "recipeId": 102,
+      "userId": 2,
+      "name": "Jamie Lee",
+      "body": "Added chili flakes and it slapped",
+      "createdAt": "2025-10-07T10:12:00Z"
+    },
+    {
+      "id": "7003",
+      "recipeId": 101,
+      "userId": 1,
+      "name": "Nicholas Chong",
+      "body": "Needed a bit more milk",
+      "createdAt": "2025-10-07T12:05:00Z"
+    },
+    {
+      "id": "7004",
+      "recipeId": 104,
+      "userId": 2,
+      "name": "Jamie Lee",
+      "body": "Great with leftover rice",
+      "createdAt": "2025-10-08T08:20:00Z"
+    }
+  ]
+}
