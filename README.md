@@ -153,7 +153,7 @@ Code Quality Requirements:
 * At least 10 tests (project includes 11)
 * Code formatted with Prettier
 * Clean and readable naming and organization
-* Environment variable file included
+* No environment variables or APIs are used
 * Only uses course-approved React concepts
 
 User Experience Requirements:
