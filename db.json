@@ -11,7 +11,7 @@
       "id": "1",
       "userId": 1,
       "name": "Flour",
-      "quantity": "4 cups",
+      "quantity": "2 cups",
       "category": "Baking",
       "inStock": true
     },
@@ -110,6 +110,30 @@
       "quantity": "2 cups",
       "category": "Vegetables",
       "inStock": true
+    },
+    {
+      "id": "4a00",
+      "name": "Salt",
+      "quantity": "5 cups",
+      "category": "Baking",
+      "inStock": true,
+      "userId": 1
+    },
+    {
+      "id": "51de",
+      "name": "Black Pepper",
+      "quantity": "4 cups",
+      "category": "Condiments",
+      "inStock": true,
+      "userId": 1
+    },
+    {
+      "id": "b39c",
+      "name": "Basil",
+      "quantity": "2 bundles",
+      "category": "Produce",
+      "inStock": true,
+      "userId": 1
     }
   ],
   "ingredients": [
