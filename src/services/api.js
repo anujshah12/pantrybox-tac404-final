@@ -36,3 +36,4 @@ export function apiDelete(path) {
     return true
   })
 }
+

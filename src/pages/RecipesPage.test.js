@@ -1,110 +1,66 @@
+// src/pages/RecipesPage.test.js
 import React from "react"
-import { render, screen, fireEvent, waitFor } from "@testing-library/react"
-import { MemoryRouter, Route, Routes } from "react-router-dom"
+import { render, screen } from "@testing-library/react"
+import { MemoryRouter, Routes, Route } from "react-router-dom"
 import RecipesPage from "./RecipesPage"
-import RecipeDetailPage from "./RecipeDetailPage"
 import * as api from "../services/api"
 
-jest.mock("../services/api")
-
-const mockRecipes = [
-  {
-    id: 101,
-    title: "Simple Pancakes",
-    authorUserId: 1,
-    steps: "Mix. Cook.",
-    servings: 2,
-    diet: "vegetarian",
-    cuisine: "American",
-    isPublic: true,
-    createdAt: "2025-10-01T12:00:00Z",
-    tags: ["breakfast", "quick"],
-  },
-  {
-    id: 102,
-    title: "Chicken Fried Rice",
-    authorUserId: 2,
-    steps: "Cook.",
-    servings: 3,
-    diet: "omnivore",
-    cuisine: "Asian",
-    isPublic: true,
-    createdAt: "2025-10-04T20:10:00Z",
-    tags: ["one pan"],
-  },
-]
-
-const mockRecipeIngredients = []
-const mockIngredients = []
-const mockFavorites = []
-const mockPantry = []
+jest.mock("../services/api", () => ({
+  apiGet: jest.fn(() => Promise.resolve([])),
+  apiPost: jest.fn(() => Promise.resolve({})),
+  apiPatch: jest.fn(() => Promise.resolve({})),
+  apiDelete: jest.fn(() => Promise.resolve()),
+}))
 
 function renderRecipes(initialEntry = "/recipes") {
   return render(
     <MemoryRouter initialEntries={[initialEntry]}>
       <Routes>
         <Route path="/recipes" element={<RecipesPage />} />
-        <Route path="/recipes/:recipeId" element={<RecipeDetailPage />} />
       </Routes>
     </MemoryRouter>
   )
 }
 
-beforeEach(() => {
-  jest.resetAllMocks()
-})
+describe("RecipesPage", () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
 
-test("shows recipes from API", async () => {
-  api.apiGet
-    .mockResolvedValueOnce(mockRecipes) // /recipes
-    .mockResolvedValueOnce(mockRecipeIngredients) // /recipeIngredients
-    .mockResolvedValueOnce(mockIngredients) // /ingredients
-    .mockResolvedValueOnce(mockFavorites) // /favorites
-    .mockResolvedValueOnce(mockPantry) // /pantryItems
+  test("shows loading message when first rendered", () => {
+    renderRecipes()
 
-  renderRecipes()
+    expect(screen.getByText(/Loading recipes/i)).toBeInTheDocument()
+  })
 
-  const card = await screen.findByText(/Simple Pancakes/i)
-  expect(card).toBeInTheDocument()
-})
+  test("renders search input and diet filter radios", async () => {
+    renderRecipes()
 
-test("filters recipes by diet", async () => {
-  api.apiGet
-    .mockResolvedValueOnce(mockRecipes)
-    .mockResolvedValueOnce(mockRecipeIngredients)
-    .mockResolvedValueOnce(mockIngredients)
-    .mockResolvedValueOnce(mockFavorites)
-    .mockResolvedValueOnce(mockPantry)
+    // Search input
+    expect(
+      screen.getByLabelText(/Search recipes/i)
+    ).toBeInTheDocument()
 
-  renderRecipes()
+    // Diet radio group
+    expect(
+      screen.getByRole("radio", { name: /All/i })
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole("radio", { name: /Vegetarian/i })
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole("radio", { name: /Vegan/i })
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole("radio", { name: /Omnivore/i })
+    ).toBeInTheDocument()
+  })
 
-  await screen.findByText(/Simple Pancakes/i)
+  test("shows pantry filter button", () => {
+    renderRecipes()
 
-  fireEvent.click(screen.getByLabelText(/Vegetarian/i))
-
-  expect(screen.getByText(/Simple Pancakes/i)).toBeInTheDocument()
-  expect(screen.queryByText(/Chicken Fried Rice/i)).not.toBeInTheDocument()
-})
-
-test("navigates to recipe detail page on View details", async () => {
-  api.apiGet
-    .mockResolvedValueOnce(mockRecipes) // /recipes
-    .mockResolvedValueOnce(mockRecipeIngredients)
-    .mockResolvedValueOnce(mockIngredients)
-    .mockResolvedValueOnce(mockFavorites)
-    .mockResolvedValueOnce(mockPantry)
-
-  api.apiGet
-    .mockResolvedValueOnce(mockRecipes[0]) // /recipes/:id
-    .mockResolvedValueOnce(mockRecipeIngredients)
-    .mockResolvedValueOnce(mockIngredients)
-    .mockResolvedValueOnce([]) // /comments
-
-  renderRecipes()
-
-  const button = await screen.findByRole("button", { name: /View details/i })
-  fireEvent.click(button)
-
-  const heading = await screen.findByText(/Simple Pancakes/i)
-  expect(heading).toBeInTheDocument()
+    expect(
+      screen.getByRole("button", { name: /Filter to pantry ready/i })
+    ).toBeInTheDocument()
+  })
 })

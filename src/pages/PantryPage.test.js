@@ -1,3 +1,4 @@
+// src/pages/PantryPage.test.js
 import React from "react"
 import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 import PantryPage from "./PantryPage"
@@ -16,59 +17,79 @@ const mockItems = [
   },
 ]
 
-test("shows loading then pantry items", async () => {
-  api.apiGet.mockResolvedValueOnce(mockItems)
-
-  render(<PantryPage />)
-
-  expect(screen.getByText(/Loading pantry items/i)).toBeInTheDocument()
-
-  const row = await screen.findByText(/Flour/i)
-  expect(row).toBeInTheDocument()
-})
-
-test("validation shows errors on empty submit", async () => {
-  api.apiGet.mockResolvedValueOnce([])
-
-  render(<PantryPage />)
-
-  await screen.findByText(/No pantry items yet/i)
-
-  fireEvent.click(screen.getByRole("button", { name: /Add item/i }))
-
-  expect(screen.getByText(/Name is required/i)).toBeInTheDocument()
-  expect(screen.getByText(/Quantity is required/i)).toBeInTheDocument()
-  expect(screen.getByText(/Category is required/i)).toBeInTheDocument()
-})
-
-test("submits valid pantry item", async () => {
-  api.apiGet.mockResolvedValueOnce([])
-  api.apiPost.mockResolvedValueOnce({
-    id: 2,
-    userId: 1,
-    name: "Eggs",
-    quantity: "6",
-    category: "Dairy",
-    inStock: true,
+describe("PantryPage", () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
   })
 
-  render(<PantryPage />)
+  test("shows loading then pantry items", async () => {
+    api.apiGet.mockResolvedValueOnce(mockItems)
 
-  await screen.findByText(/No pantry items yet/i)
+    render(<PantryPage />)
 
-  fireEvent.change(screen.getByLabelText(/Item name/i), {
-    target: { value: "Eggs" },
-  })
-  fireEvent.change(screen.getByLabelText(/Quantity/i), {
-    target: { value: "6" },
-  })
-  fireEvent.change(screen.getByLabelText(/Category/i), {
-    target: { value: "Dairy" },
+    expect(screen.getByText(/Loading pantry/i)).toBeInTheDocument()
+
+    const row = await screen.findByText(/Flour/i)
+    expect(row).toBeInTheDocument()
   })
 
-  fireEvent.click(screen.getByRole("button", { name: /Add item/i }))
+  test("validation shows errors on empty submit", async () => {
+    api.apiGet.mockResolvedValueOnce([])
 
-  await waitFor(() =>
-    expect(screen.getByText(/Eggs/i)).toBeInTheDocument()
-  )
+    render(<PantryPage />)
+
+    await screen.findByText(/Your pantry is empty/i)
+
+    fireEvent.click(screen.getByRole("button", { name: /Add item/i }))
+
+    expect(
+      screen.getByText(/Item name is required/i)
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText(/Quantity is required/i)
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText(/Please choose a category/i)
+    ).toBeInTheDocument()
+  })
+
+  test("submits a valid pantry item", async () => {
+    api.apiGet.mockResolvedValueOnce([])
+
+    const newItem = {
+      id: 2,
+      userId: 1,
+      name: "Eggs",
+      quantity: "6",
+      category: "Dairy",
+      inStock: true,
+    }
+
+    api.apiPost.mockResolvedValueOnce(newItem)
+
+    render(<PantryPage />)
+
+    await screen.findByText(/Your pantry is empty/i)
+
+    // Use placeholders for the inputs
+    fireEvent.change(
+      screen.getByPlaceholderText(/Flour, Eggs, Garlic/i),
+      { target: { value: "Eggs" } }
+    )
+    fireEvent.change(
+      screen.getByPlaceholderText(/2 cups, 6, 3 cloves/i),
+      { target: { value: "6" } }
+    )
+
+    // Select has no accessible name, so just grab the only combobox
+    fireEvent.change(screen.getByRole("combobox"), {
+      target: { value: "Dairy" },
+    })
+
+    fireEvent.click(screen.getByRole("button", { name: /Add item/i }))
+
+    await waitFor(() =>
+      expect(screen.getByText(/Eggs/i)).toBeInTheDocument()
+    )
+  })
 })

@@ -35,9 +35,6 @@ function RecipeCard({ recipe, isFavorite, onToggleFavorite }) {
             {isFavorite ? "Unfavorite" : "Favorite"}
           </button>
         </div>
-        <small className="text-muted mt-2">
-          View favorites at <Link to="/users/1/favorites">Favorites</Link>
-        </small>
       </div>
     </div>
   )
