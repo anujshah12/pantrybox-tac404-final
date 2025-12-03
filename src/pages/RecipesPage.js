@@ -17,10 +17,12 @@ function RecipesPage() {
   const [favorites, setFavorites] = useState([])
   const [pantryItems, setPantryItems] = useState([])
   const [loading, setLoading] = useState(true)
+
+  // filter.pantryOnly controls whether we restrict to pantry matches
   const [filter, setFilter] = useState({
     search: "",
     diet: "",
-    matchMode: "all",
+    pantryOnly: false,
   })
 
   useEffect(() => {
@@ -61,9 +63,12 @@ function RecipesPage() {
   const recipesWithMatch = useMemo(() => {
     return recipes.map((recipe) => {
       const ris = recipeIngredients
-        .filter((ri) => ri.recipeId === recipe.id)
+        .filter((ri) => Number(ri.recipeId) === Number(recipe.id))
         .map((ri) => {
-          const ing = ingredients.find((i) => i.id === ri.ingredientId)
+          const riIngId = Number(ri.ingredientId)
+          const ing = ingredients.find(
+            (i) => Number(i.id) === riIngId
+          )
           return {
             ...ri,
             ingredientName: ing ? ing.name : "",
@@ -78,9 +83,6 @@ function RecipesPage() {
 
   const filtered = useMemo(() => {
     return recipesWithMatch.filter(({ recipe, allMatch }) => {
-      if (filter.matchMode === "all" && !allMatch) {
-        return false
-      }
       if (filter.diet && recipe.diet !== filter.diet) {
         return false
       }
@@ -88,6 +90,9 @@ function RecipesPage() {
         filter.search &&
         !recipe.title.toLowerCase().includes(filter.search.toLowerCase())
       ) {
+        return false
+      }
+      if (filter.pantryOnly && !allMatch) {
         return false
       }
       return true

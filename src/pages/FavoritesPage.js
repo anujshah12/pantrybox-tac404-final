@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import useDocumentTitle from "../hooks/useDocumentTitle"
-import { apiGet } from "../services/api"
+import { apiGet, apiDelete } from "../services/api"
 import EmptyState from "../shared/EmptyState"
+import { toast } from "react-toastify"
 
 function FavoritesPage() {
   const { userId } = useParams()
@@ -20,6 +21,8 @@ function FavoritesPage() {
         ])
         setFavorites(favoritesData)
         setRecipes(recipesData)
+      } catch (err) {
+        toast.error("Failed to load favorites")
       } finally {
         setLoading(false)
       }
@@ -31,7 +34,16 @@ function FavoritesPage() {
     return <p>Loading favorites...</p>
   }
 
-  if (favorites.length === 0) {
+  function findRecipe(recipeId) {
+    return recipes.find((r) => r.id === recipeId)
+  }
+
+  // Only keep favorites whose recipes still exist
+  const favoritesWithRecipes = favorites.filter((fav) =>
+    findRecipe(fav.recipeId)
+  )
+
+  if (favoritesWithRecipes.length === 0) {
     return (
       <EmptyState
         title="No favorites yet"
@@ -40,24 +52,51 @@ function FavoritesPage() {
     )
   }
 
-  function findRecipe(recipeId) {
-    return recipes.find((r) => r.id === recipeId)
+  async function handleUnfavorite(favId) {
+    try {
+      await apiDelete(`/favorites/${favId}`)
+      setFavorites((prev) => prev.filter((f) => f.id !== favId))
+      toast.success("Removed from favorites")
+    } catch {
+      toast.error("Failed to remove favorite")
+    }
   }
 
   return (
     <div>
-      <h2 className="h4 mb-3">Favorites for user {userId}</h2>
+      <h2 className="h4 mb-3">Your Favorites</h2>
       <ul className="list-group">
-        {favorites.map((fav) => {
+        {favoritesWithRecipes.map((fav) => {
           const recipe = findRecipe(fav.recipeId)
-          if (!recipe) return null
           return (
-            <li key={fav.id} className="list-group-item">
-              <h3 className="h6 mb-1">{recipe.title}</h3>
-              <p className="mb-1 small text-muted">
-                Saved on {new Date(fav.bookmarkedAt).toLocaleString()}
-              </p>
-              <p className="mb-0">{recipe.steps.slice(0, 100)}...</p>
+            <li
+              key={fav.id}
+              className="list-group-item d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center"
+            >
+              <div className="me-3">
+                <h3 className="h6 mb-1">{recipe.title}</h3>
+                <p className="mb-1 small text-muted">
+                  Saved on {new Date(fav.bookmarkedAt).toLocaleString()}
+                </p>
+                <p className="mb-0">
+                  {recipe.steps ? recipe.steps.slice(0, 100) : ""}...
+                </p>
+              </div>
+              <div className="mt-2 mt-md-0 d-flex gap-2">
+                <Link
+                  to={`/recipes/${recipe.id}`}
+                  className="btn btn-outline-primary btn-sm"
+                >
+                  View details
+                </Link>
+                <button
+                  type="button"
+                  className="btn btn-outline-danger btn-sm"
+                  onClick={() => handleUnfavorite(fav.id)}
+                >
+                  Unfavorite
+                </button>
+              </div>
             </li>
           )
         })}

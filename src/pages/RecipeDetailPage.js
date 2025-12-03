@@ -15,58 +15,106 @@ function RecipeDetailPage() {
   const [recipe, setRecipe] = useState(null)
   const [allRecipeIngredients, setAllRecipeIngredients] = useState([])
   const [allIngredients, setAllIngredients] = useState([])
+  const [pantryItems, setPantryItems] = useState([])
   const [comments, setComments] = useState([])
+  const [favorites, setFavorites] = useState([])
   const [loading, setLoading] = useState(true)
+
+  useDocumentTitle(recipe ? recipe.title : "Recipe")
 
   useEffect(() => {
     async function load() {
+      if (!recipeId) {
+        toast.error("Missing recipe id")
+        setLoading(false)
+        return
+      }
+
       try {
-        const idNum = parseInt(recipeId, 10)
-        const [recipeData, recipeIngData, ingredientsData, commentsData] =
-          await Promise.all([
-            apiGet(`/recipes/${idNum}`),
-            apiGet("/recipeIngredients"),
-            apiGet("/ingredients"),
-            apiGet("/comments"),
-          ])
+        // Use recipeId directly (JSON Server accepts this fine for numeric ids)
+        const [
+          recipeData,
+          recipeIngData,
+          ingredientsData,
+          commentsData,
+          favoritesData,
+          pantryData,
+        ] = await Promise.all([
+          apiGet(`/recipes/${recipeId}`),
+          apiGet(`/recipeIngredients?recipeId=${recipeId}`),
+          apiGet("/ingredients"),
+          apiGet(`/comments?recipeId=${recipeId}`),
+          apiGet(
+            `/favorites?userId=${CURRENT_USER_ID}&recipeId=${recipeId}`
+          ),
+          apiGet(`/pantryItems?userId=${CURRENT_USER_ID}`),
+        ])
 
         setRecipe(recipeData)
         setAllRecipeIngredients(recipeIngData)
         setAllIngredients(ingredientsData)
+
+        commentsData.sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        )
         setComments(commentsData)
+
+        setFavorites(favoritesData)
+        setPantryItems(pantryData)
       } catch (err) {
+        console.error("Failed to load recipe detail:", err)
         toast.error("Failed to load recipe")
       } finally {
         setLoading(false)
       }
     }
+
     load()
   }, [recipeId])
 
+  const pantryNames = useMemo(
+    () => new Set(pantryItems.map((p) => p.name.toLowerCase())),
+    [pantryItems]
+  )
+
   const recipeIngredients = useMemo(() => {
     if (!recipe) return []
-    return allRecipeIngredients
-      .filter((ri) => ri.recipeId === recipe.id)
-      .map((ri) => {
-        const ing = allIngredients.find((i) => i.id === ri.ingredientId)
-        return {
-          ...ri,
-          ingredientName: ing ? ing.name : "",
-        }
-      })
-  }, [recipe, allRecipeIngredients, allIngredients])
-
-  const recipeComments = useMemo(() => {
-    if (!recipe) return []
-    return comments
-      .filter((c) => c.recipeId === recipe.id)
-      .sort(
-        (a, b) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    return allRecipeIngredients.map((ri) => {
+      const riIngId = Number(ri.ingredientId)
+      const ing = allIngredients.find(
+        (i) => Number(i.id) === riIngId
       )
-  }, [comments, recipe])
+      return {
+        ...ri,
+        ingredientName: ing ? ing.name : "Unknown ingredient",
+      }
+    })
+  }, [recipe, allRecipeIngredients, allIngredients])
+  
+  const pantryMatchInfo = useMemo(() => {
+    if (!recipe) {
+      return { allMatch: false, missingNames: [] }
+    }
+    const names = recipeIngredients.map((ri) => ri.ingredientName)
+    const missing = names.filter(
+      (name) => name && !pantryNames.has(name.toLowerCase())
+    )
+    return {
+      allMatch: missing.length === 0,
+      missingNames: missing,
+    }
+  }, [recipe, recipeIngredients, pantryNames])
 
-  useDocumentTitle(recipe ? recipe.title : "Recipe")
+  const isFavorite = useMemo(
+    () => favorites.length > 0,
+    [favorites]
+  )
+
+  const favoriteRecord = useMemo(
+    () => (favorites.length > 0 ? favorites[0] : null),
+    [favorites]
+  )
 
   function handleBack() {
     navigate("/recipes")
@@ -83,7 +131,7 @@ function RecipeDetailPage() {
     }
     return apiPost("/comments", payload)
       .then((created) => {
-        setComments((prev) => [...prev, created])
+        setComments((prev) => [created, ...prev])
         toast.success("Comment added")
       })
       .catch((err) => {
@@ -99,6 +147,32 @@ function RecipeDetailPage() {
         toast.success("Comment deleted")
       })
       .catch(() => toast.error("Failed to delete comment"))
+  }
+
+  async function handleToggleFavorite() {
+    if (!recipe) return
+
+    if (isFavorite && favoriteRecord) {
+      try {
+        await apiDelete(`/favorites/${favoriteRecord.id}`)
+        setFavorites([])
+        toast.success("Removed from favorites")
+      } catch {
+        toast.error("Failed to remove favorite")
+      }
+    } else {
+      try {
+        const created = await apiPost("/favorites", {
+          userId: CURRENT_USER_ID,
+          recipeId: recipe.id,
+          bookmarkedAt: new Date().toISOString(),
+        })
+        setFavorites([created])
+        toast.success("Added to favorites")
+      } catch {
+        toast.error("Failed to add favorite")
+      }
+    }
   }
 
   if (loading) {
@@ -122,10 +196,33 @@ function RecipeDetailPage() {
         ← Back to recipes
       </button>
 
-      <h3 className="h4 mb-1">{recipe.title}</h3>
-      <p className="small text-muted">
-        Diet {recipe.diet} • Serves {recipe.servings}
-      </p>
+      <div className="d-flex justify-content-between align-items-start mb-2">
+        <div>
+          <h3 className="h4 mb-1">{recipe.title}</h3>
+          <p className="small text-muted mb-1">
+            Diet {recipe.diet} • Serves {recipe.servings}
+          </p>
+          <span
+            className={
+              "badge " +
+              (pantryMatchInfo.allMatch ? "bg-success" : "bg-secondary")
+            }
+          >
+            {pantryMatchInfo.allMatch
+              ? "Pantry ready"
+              : "Missing ingredients from your pantry"}
+          </span>
+        </div>
+        <button
+          className={
+            "btn btn-sm " +
+            (isFavorite ? "btn-warning" : "btn-outline-warning")
+          }
+          onClick={handleToggleFavorite}
+        >
+          {isFavorite ? "Unfavorite" : "Favorite"}
+        </button>
+      </div>
 
       <h5 className="h6 mt-3">Ingredients</h5>
       <ul>
@@ -143,7 +240,7 @@ function RecipeDetailPage() {
 
       <h5 className="h6 mb-2">Comments</h5>
       <CommentForm onSubmit={handleAddComment} />
-      <CommentList comments={recipeComments} onDelete={handleDeleteComment} />
+      <CommentList comments={comments} onDelete={handleDeleteComment} />
     </div>
   )
 }

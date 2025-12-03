@@ -2,13 +2,8 @@
   "users": [
     {
       "id": "1",
-      "name": "Nicholas Chong",
-      "email": "nick@example.com"
-    },
-    {
-      "id": "2",
-      "name": "Jamie Lee",
-      "email": "jamie@example.com"
+      "name": "PantryBox User",
+      "email": "user@example.com"
     }
   ],
   "pantryItems": [
@@ -42,7 +37,7 @@
       "name": "Butter",
       "quantity": "4 tbsp",
       "category": "Dairy",
-      "inStock": false
+      "inStock": true
     },
     {
       "id": "5",
@@ -54,26 +49,66 @@
     },
     {
       "id": "6",
-      "userId": 2,
-      "name": "Rice",
-      "quantity": "3 cups",
-      "category": "Grains",
+      "userId": 1,
+      "name": "Onion",
+      "quantity": "1",
+      "category": "Produce",
       "inStock": true
     },
     {
       "id": "7",
-      "userId": 2,
-      "name": "Chicken Breast",
-      "quantity": "2",
-      "category": "Protein",
+      "userId": 1,
+      "name": "Rice",
+      "quantity": "2 cups",
+      "category": "Grains",
       "inStock": true
     },
     {
       "id": "8",
-      "userId": 2,
+      "userId": 1,
       "name": "Soy Sauce",
-      "quantity": "2 tbsp",
+      "quantity": "3 tbsp",
       "category": "Condiments",
+      "inStock": true
+    },
+    {
+      "id": "9",
+      "userId": 1,
+      "name": "Black Beans",
+      "quantity": "1 can",
+      "category": "Canned",
+      "inStock": true
+    },
+    {
+      "id": "10",
+      "userId": 1,
+      "name": "Tortilla",
+      "quantity": "8",
+      "category": "Grains",
+      "inStock": true
+    },
+    {
+      "id": "11",
+      "userId": 1,
+      "name": "Cheddar Cheese",
+      "quantity": "1 cup",
+      "category": "Dairy",
+      "inStock": true
+    },
+    {
+      "id": "12",
+      "userId": 1,
+      "name": "Tomato",
+      "quantity": "4",
+      "category": "Produce",
+      "inStock": true
+    },
+    {
+      "id": "13",
+      "userId": 1,
+      "name": "Spinach",
+      "quantity": "2 cups",
+      "category": "Vegetables",
       "inStock": true
     }
   ],
@@ -152,6 +187,41 @@
       "id": "15",
       "name": "Black Pepper",
       "unit": "tsp"
+    },
+    {
+      "id": "16",
+      "name": "Black Beans",
+      "unit": "cup"
+    },
+    {
+      "id": "17",
+      "name": "Tortilla",
+      "unit": "count"
+    },
+    {
+      "id": "18",
+      "name": "Cheddar Cheese",
+      "unit": "cup"
+    },
+    {
+      "id": "19",
+      "name": "Lime",
+      "unit": "count"
+    },
+    {
+      "id": "20",
+      "name": "Spinach",
+      "unit": "cup"
+    },
+    {
+      "id": "21",
+      "name": "Oats",
+      "unit": "cup"
+    },
+    {
+      "id": "22",
+      "name": "Banana",
+      "unit": "count"
     }
   ],
   "recipes": [
@@ -159,7 +229,7 @@
       "id": "101",
       "title": "Simple Pancakes",
       "authorUserId": 1,
-      "steps": "Whisk dry and wet separately. Combine. Cook on medium heat. Flip once bubbles form.",
+      "steps": "Whisk flour, eggs, and milk. Heat pan with butter. Cook until bubbles form, flip, and serve.",
       "servings": 2,
       "diet": "vegetarian",
       "cuisine": "American",
@@ -174,7 +244,7 @@
       "id": "102",
       "title": "Garlic Butter Pasta",
       "authorUserId": 1,
-      "steps": "Boil pasta. Sauté garlic in butter and olive oil. Toss with pasta. Season and serve.",
+      "steps": "Cook spaghetti. Sauté garlic in butter and olive oil. Toss pasta and season.",
       "servings": 2,
       "diet": "vegetarian",
       "cuisine": "Italian",
@@ -188,8 +258,8 @@
     {
       "id": "103",
       "title": "Tomato Basil Soup",
-      "authorUserId": 2,
-      "steps": "Sauté onion and garlic. Add tomatoes and simmer. Blend smooth. Stir in basil.",
+      "authorUserId": 1,
+      "steps": "Sauté onion and garlic. Add tomatoes, simmer, blend, stir in basil.",
       "servings": 4,
       "diet": "vegan",
       "cuisine": "Italian",
@@ -203,8 +273,8 @@
     {
       "id": "104",
       "title": "Chicken Fried Rice",
-      "authorUserId": 2,
-      "steps": "Cook diced chicken. Add onion and garlic. Stir fry rice and soy sauce. Season and serve.",
+      "authorUserId": 1,
+      "steps": "Cook chicken. Add onion and garlic. Stir fry rice with soy sauce.",
       "servings": 3,
       "diet": "omnivore",
       "cuisine": "Asian",
@@ -213,6 +283,96 @@
       "tags": [
         "one pan",
         "leftovers"
+      ]
+    },
+    {
+      "id": "105",
+      "title": "Veggie Fried Rice",
+      "authorUserId": 1,
+      "steps": "Sauté onion and garlic. Add rice, soy sauce, spinach, and tomatoes. Season and serve.",
+      "servings": 3,
+      "diet": "vegan",
+      "cuisine": "Asian",
+      "isPublic": true,
+      "createdAt": "2025-10-06T11:15:00Z",
+      "tags": [
+        "vegan",
+        "quick"
+      ]
+    },
+    {
+      "id": "106",
+      "title": "Black Bean Quesadillas",
+      "authorUserId": 1,
+      "steps": "Mash beans, spread on tortillas, top with cheese, fold and crisp in pan.",
+      "servings": 2,
+      "diet": "vegetarian",
+      "cuisine": "Mexican",
+      "isPublic": true,
+      "createdAt": "2025-10-07T09:00:00Z",
+      "tags": [
+        "pantry",
+        "snack"
+      ]
+    },
+    {
+      "id": "107",
+      "title": "Spinach Garlic Stir-Fry",
+      "authorUserId": 1,
+      "steps": "Sauté garlic in olive oil. Add spinach, cook until wilted. Season with lime.",
+      "servings": 2,
+      "diet": "vegan",
+      "cuisine": "Fusion",
+      "isPublic": true,
+      "createdAt": "2025-10-08T14:20:00Z",
+      "tags": [
+        "side",
+        "green"
+      ]
+    },
+    {
+      "id": "108",
+      "title": "Overnight Oats with Banana",
+      "authorUserId": 1,
+      "steps": "Combine oats and milk. Chill overnight. Add banana slices.",
+      "servings": 1,
+      "diet": "vegetarian",
+      "cuisine": "American",
+      "isPublic": true,
+      "createdAt": "2025-10-09T21:45:00Z",
+      "tags": [
+        "no-cook",
+        "breakfast"
+      ]
+    },
+    {
+      "id": "109",
+      "title": "Garlic Butter Chicken",
+      "authorUserId": 1,
+      "steps": "Pan-sear chicken with butter and olive oil. Add garlic, salt, pepper.",
+      "servings": 2,
+      "diet": "omnivore",
+      "cuisine": "American",
+      "isPublic": true,
+      "createdAt": "2025-10-10T17:30:00Z",
+      "tags": [
+        "protein",
+        "weeknight"
+      ]
+    },
+    {
+      "id": "110",
+      "title": "Tomato Rice Bowl",
+      "authorUserId": 1,
+      "steps": "Warm rice. Top with sautéed tomato, onion, garlic, lime.",
+      "servings": 2,
+      "diet": "vegan",
+      "cuisine": "Fusion",
+      "isPublic": true,
+      "createdAt": "2025-10-11T13:00:00Z",
+      "tags": [
+        "bowl",
+        "simple"
       ]
     }
   ],
@@ -237,6 +397,13 @@
       "ingredientId": 3,
       "amount": 1,
       "unit": "cup"
+    },
+    {
+      "id": "9004",
+      "recipeId": 101,
+      "ingredientId": 4,
+      "amount": 1,
+      "unit": "tbsp"
     },
     {
       "id": "9010",
@@ -356,6 +523,195 @@
       "ingredientId": 12,
       "amount": 2,
       "unit": "tbsp"
+    },
+    {
+      "id": "9040",
+      "recipeId": 105,
+      "ingredientId": 13,
+      "amount": 1,
+      "unit": "count"
+    },
+    {
+      "id": "9041",
+      "recipeId": 105,
+      "ingredientId": 5,
+      "amount": 2,
+      "unit": "clove"
+    },
+    {
+      "id": "9042",
+      "recipeId": 105,
+      "ingredientId": 11,
+      "amount": 3,
+      "unit": "cup"
+    },
+    {
+      "id": "9043",
+      "recipeId": 105,
+      "ingredientId": 12,
+      "amount": 2,
+      "unit": "tbsp"
+    },
+    {
+      "id": "9044",
+      "recipeId": 105,
+      "ingredientId": 20,
+      "amount": 1,
+      "unit": "cup"
+    },
+    {
+      "id": "9050",
+      "recipeId": 106,
+      "ingredientId": 16,
+      "amount": 1,
+      "unit": "cup"
+    },
+    {
+      "id": "9051",
+      "recipeId": 106,
+      "ingredientId": 18,
+      "amount": 1,
+      "unit": "cup"
+    },
+    {
+      "id": "9052",
+      "recipeId": 106,
+      "ingredientId": 17,
+      "amount": 4,
+      "unit": "count"
+    },
+    {
+      "id": "9055",
+      "recipeId": 107,
+      "ingredientId": 5,
+      "amount": 2,
+      "unit": "clove"
+    },
+    {
+      "id": "9056",
+      "recipeId": 107,
+      "ingredientId": 7,
+      "amount": 1,
+      "unit": "tbsp"
+    },
+    {
+      "id": "9057",
+      "recipeId": 107,
+      "ingredientId": 20,
+      "amount": 3,
+      "unit": "cup"
+    },
+    {
+      "id": "9058",
+      "recipeId": 107,
+      "ingredientId": 14,
+      "amount": 0.5,
+      "unit": "tsp"
+    },
+    {
+      "id": "9059",
+      "recipeId": 107,
+      "ingredientId": 19,
+      "amount": 1,
+      "unit": "count"
+    },
+    {
+      "id": "9060",
+      "recipeId": 108,
+      "ingredientId": 21,
+      "amount": 0.75,
+      "unit": "cup"
+    },
+    {
+      "id": "9061",
+      "recipeId": 108,
+      "ingredientId": 3,
+      "amount": 0.75,
+      "unit": "cup"
+    },
+    {
+      "id": "9062",
+      "recipeId": 108,
+      "ingredientId": 22,
+      "amount": 1,
+      "unit": "count"
+    },
+    {
+      "id": "9065",
+      "recipeId": 109,
+      "ingredientId": 10,
+      "amount": 2,
+      "unit": "count"
+    },
+    {
+      "id": "9066",
+      "recipeId": 109,
+      "ingredientId": 5,
+      "amount": 3,
+      "unit": "clove"
+    },
+    {
+      "id": "9067",
+      "recipeId": 109,
+      "ingredientId": 4,
+      "amount": 3,
+      "unit": "tbsp"
+    },
+    {
+      "id": "9068",
+      "recipeId": 109,
+      "ingredientId": 7,
+      "amount": 1,
+      "unit": "tbsp"
+    },
+    {
+      "id": "9069",
+      "recipeId": 109,
+      "ingredientId": 14,
+      "amount": 0.5,
+      "unit": "tsp"
+    },
+    {
+      "id": "9070",
+      "recipeId": 109,
+      "ingredientId": 15,
+      "amount": 0.25,
+      "unit": "tsp"
+    },
+    {
+      "id": "9075",
+      "recipeId": 110,
+      "ingredientId": 11,
+      "amount": 2,
+      "unit": "cup"
+    },
+    {
+      "id": "9076",
+      "recipeId": 110,
+      "ingredientId": 8,
+      "amount": 2,
+      "unit": "count"
+    },
+    {
+      "id": "9077",
+      "recipeId": 110,
+      "ingredientId": 13,
+      "amount": 1,
+      "unit": "count"
+    },
+    {
+      "id": "9078",
+      "recipeId": 110,
+      "ingredientId": 5,
+      "amount": 1,
+      "unit": "clove"
+    },
+    {
+      "id": "9079",
+      "recipeId": 110,
+      "ingredientId": 19,
+      "amount": 1,
+      "unit": "count"
     }
   ],
   "favorites": [
@@ -368,14 +724,14 @@
     {
       "id": "5002",
       "userId": 1,
-      "recipeId": 101,
-      "bookmarkedAt": "2025-10-06T14:10:00Z"
+      "recipeId": 105,
+      "bookmarkedAt": "2025-10-06T08:15:00Z"
     },
     {
       "id": "5003",
-      "userId": 2,
-      "recipeId": 104,
-      "bookmarkedAt": "2025-10-06T16:45:00Z"
+      "userId": 1,
+      "recipeId": 106,
+      "bookmarkedAt": "2025-10-08T12:00:00Z"
     }
   ],
   "comments": [
@@ -383,33 +739,81 @@
       "id": "7001",
       "recipeId": 102,
       "userId": 1,
-      "name": "Nicholas Chong",
-      "body": "So simple and tasty",
+      "name": "PantryBox User",
+      "body": "So simple and tasty.",
       "createdAt": "2025-10-06T18:45:00Z"
     },
     {
       "id": "7002",
       "recipeId": 102,
-      "userId": 2,
-      "name": "Jamie Lee",
-      "body": "Added chili flakes and it slapped",
+      "userId": 1,
+      "name": "PantryBox User",
+      "body": "Added chili flakes and it slapped.",
       "createdAt": "2025-10-07T10:12:00Z"
     },
     {
       "id": "7003",
       "recipeId": 101,
       "userId": 1,
-      "name": "Nicholas Chong",
-      "body": "Needed a bit more milk",
+      "name": "PantryBox User",
+      "body": "Needed a bit more milk for my taste.",
       "createdAt": "2025-10-07T12:05:00Z"
     },
     {
       "id": "7004",
       "recipeId": 104,
-      "userId": 2,
-      "name": "Jamie Lee",
-      "body": "Great with leftover rice",
+      "userId": 1,
+      "name": "PantryBox User",
+      "body": "Great with leftover rice. Super fast.",
       "createdAt": "2025-10-08T08:20:00Z"
+    },
+    {
+      "id": "7005",
+      "recipeId": 105,
+      "userId": 1,
+      "name": "PantryBox User",
+      "body": "Love that this is vegan and uses pantry stuff.",
+      "createdAt": "2025-10-08T09:30:00Z"
+    },
+    {
+      "id": "7006",
+      "recipeId": 106,
+      "userId": 1,
+      "name": "PantryBox User",
+      "body": "Perfect late-night snack.",
+      "createdAt": "2025-10-09T21:50:00Z"
+    },
+    {
+      "id": "7007",
+      "recipeId": 107,
+      "userId": 1,
+      "name": "PantryBox User",
+      "body": "Simple but really good with rice.",
+      "createdAt": "2025-10-10T10:05:00Z"
+    },
+    {
+      "id": "7008",
+      "recipeId": 108,
+      "userId": 1,
+      "name": "PantryBox User",
+      "body": "Great meal prep for the week.",
+      "createdAt": "2025-10-11T06:45:00Z"
+    },
+    {
+      "id": "7009",
+      "recipeId": 109,
+      "userId": 1,
+      "name": "PantryBox User",
+      "body": "Garlic butter on chicken never fails.",
+      "createdAt": "2025-10-11T18:30:00Z"
+    },
+    {
+      "id": "7010",
+      "recipeId": 110,
+      "userId": 1,
+      "name": "PantryBox User",
+      "body": "Tastes way better than it looks, super easy.",
+      "createdAt": "2025-10-12T09:00:00Z"
     }
   ]
 }

@@ -1,85 +1,119 @@
 import React from "react"
 
 function FilterBar({ filter, onFilterChange }) {
-  function handleChange(e) {
-    const { name, value } = e.target
+  function handleSearchChange(e) {
     onFilterChange({
       ...filter,
-      [name]: value,
+      search: e.target.value,
+    })
+  }
+
+  function handleDietChange(e) {
+    onFilterChange({
+      ...filter,
+      diet: e.target.value,
+    })
+  }
+
+  function handleTogglePantryOnly() {
+    onFilterChange({
+      ...filter,
+      pantryOnly: !filter.pantryOnly,
     })
   }
 
   return (
     <div className="mb-3 p-3 border rounded bg-light">
-      <div className="row align-items-end g-2">
+      <div className="row g-2 align-items-end">
         <div className="col-md-4">
-          <label className="form-label">Search</label>
+          <label className="form-label" htmlFor="recipeSearch">
+            Search recipes
+          </label>
           <input
-            name="search"
-            value={filter.search}
-            onChange={handleChange}
+            id="recipeSearch"
+            type="text"
             className="form-control"
-            placeholder="Search recipes by title"
+            value={filter.search}
+            onChange={handleSearchChange}
+            placeholder="Search by title"
           />
         </div>
-        <div className="col-md-4">
-          <label className="form-label">Diet</label>
-          <div className="d-flex gap-3">
-            <div className="form-check">
+
+        <div className="col-md-5">
+          <span className="form-label d-block">Diet</span>
+          <div className="d-flex flex-wrap gap-2">
+            <div className="form-check form-check-inline">
               <input
                 className="form-check-input"
                 type="radio"
                 name="diet"
-                id="diet-all"
+                id="dietAll"
                 value=""
                 checked={filter.diet === ""}
-                onChange={handleChange}
+                onChange={handleDietChange}
               />
-              <label className="form-check-label" htmlFor="diet-all">
-                Any
+              <label className="form-check-label" htmlFor="dietAll">
+                All
               </label>
             </div>
-            <div className="form-check">
+            <div className="form-check form-check-inline">
               <input
                 className="form-check-input"
                 type="radio"
                 name="diet"
-                id="diet-vegetarian"
+                id="dietVeg"
                 value="vegetarian"
                 checked={filter.diet === "vegetarian"}
-                onChange={handleChange}
+                onChange={handleDietChange}
               />
-              <label className="form-check-label" htmlFor="diet-vegetarian">
+              <label className="form-check-label" htmlFor="dietVeg">
                 Vegetarian
               </label>
             </div>
-            <div className="form-check">
+            <div className="form-check form-check-inline">
               <input
                 className="form-check-input"
                 type="radio"
                 name="diet"
-                id="diet-vegan"
+                id="dietVegan"
                 value="vegan"
                 checked={filter.diet === "vegan"}
-                onChange={handleChange}
+                onChange={handleDietChange}
               />
-              <label className="form-check-label" htmlFor="diet-vegan">
+              <label className="form-check-label" htmlFor="dietVegan">
                 Vegan
+              </label>
+            </div>
+            <div className="form-check form-check-inline">
+              <input
+                className="form-check-input"
+                type="radio"
+                name="diet"
+                id="dietOmni"
+                value="omnivore"
+                checked={filter.diet === "omnivore"}
+                onChange={handleDietChange}
+              />
+              <label className="form-check-label" htmlFor="dietOmni">
+                Omnivore
               </label>
             </div>
           </div>
         </div>
-        <div className="col-md-4">
-          <label className="form-label">Match pantry</label>
-          <select
-            name="matchMode"
-            value={filter.matchMode}
-            onChange={handleChange}
-            className="form-select"
+
+        <div className="col-md-3 text-md-end mt-3 mt-md-0">
+          <button
+            type="button"
+            className={
+              "btn btn-sm " +
+              (filter.pantryOnly ? "btn-primary" : "btn-outline-primary")
+            }
+            onClick={handleTogglePantryOnly}
           >
-            <option value="all">Only full matches</option>
-            <option value="any">Show any recipes</option>
-          </select>
+            {filter.pantryOnly
+              ? "Showing only pantry ready"
+              : "Filter to pantry ready"}
+          </button>
         </div>
       </div>
     </div>
