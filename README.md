@@ -94,13 +94,17 @@ npm test
 
 Tests cover:
 
-* Routing
-* Pantry page loading and validation
-* Pantry item creation
-* Recipe list filtering
-* Favorite toggle functionality
-* Dynamic recipe detail loading
-* Comment sorting and creation
+* App loads the homepage with correct header and navigation
+* App navigates directly to the Pantry route
+* App navigates directly to the Recipes route
+* App navigates directly to the Favorites route
+* Pantry page displays loading state
+* Pantry page shows empty-state UI when no items exist
+* Pantry form shows validation errors when fields are empty
+* Pantry form successfully submits a valid item
+* Recipes page displays the search bar and filter controls
+* Recipes page loads and shows recipes after data fetch
+* Recipe detail page successfully renders the detail view
 
 ---
 
@@ -149,7 +153,7 @@ Code Quality Requirements:
 * At least 10 tests (project includes 11)
 * Code formatted with Prettier
 * Clean and readable naming and organization
-* Environment variable file included
+* No environment variables or APIs are used
 * Only uses course-approved React concepts
 
 User Experience Requirements:
